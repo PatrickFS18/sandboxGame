@@ -7,7 +7,7 @@ tree_images = [
 ]
 
 # Transformar as imagens para o tamanho adequado, se necessário
-tree_images = [pygame.transform.scale(img, (170, 200)) for img in tree_images]
+tree_images = [pygame.transform.scale(img, (170, 250)) for img in tree_images]
 
 class Tree(pygame.sprite.Sprite):
     def __init__(self, x, y):

@@ -45,7 +45,7 @@ class Character(pygame.sprite.Sprite):
                 if self.direction == -1:
                     self.image = pygame.transform.flip(self.image, True, False)
             self.rect.x += self.direction * 2
-            if self.rect.x <= 0 or self.rect.x >= 800 - self.rect.width:
+            if self.rect.x <= 0 or self.rect.x >= 1200 - self.rect.width:
                 self.direction *= -1
 
         # Verifica se a fala deve terminar

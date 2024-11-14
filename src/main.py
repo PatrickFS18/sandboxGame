@@ -37,9 +37,10 @@ respostas_personagem2 = ["Bão"]
 # Criando os personagens
 personagem1 = Character(50, 420, dialogos_personagem1, respostas_personagem2)
 personagem2 = Character(100, 420, respostas_personagem2, dialogos_personagem1)
-tree = Tree(x=500, y=350)  # Posição da árvore no mapa
+tree1 = Tree(x=150, y=300)  # Posição da árvore no mapa
+tree2 = Tree(x=500, y=300)  # Posição da árvore no mapa
 
-all_sprites = pygame.sprite.Group(personagem1, personagem2,tree)
+all_sprites = pygame.sprite.Group(personagem1, personagem2,tree1,tree2)
 
 # Classe para representar gotas de chuva
 class Raindrop(pygame.sprite.Sprite):
