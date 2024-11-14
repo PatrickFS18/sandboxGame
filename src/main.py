@@ -158,7 +158,8 @@ while running:
                 for _ in range(n):  # Número de gotas de chuva
                     raindrop = Raindrop()
                     raindrops.add(raindrop)
-
+            elif event.key == pygame.K_3:  # Ficar gigante
+                personagem1.change_size()
     # Atualiza e desenha os personagens
     dt = clock.tick(30)
     house.draw(screen)

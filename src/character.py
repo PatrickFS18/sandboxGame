@@ -33,7 +33,7 @@ class Character(pygame.sprite.Sprite):
         self.speech_start_time = 0
         self.response_wait_time = 1000  # 2 segundos para o outro responder
         self.response_start_time = None  # Quando o segundo personagem deve começar a responder
-
+        self.is_big = False
     def update(self, dt):
         # Só atualiza a animação e movimento se o personagem não estiver falando ou ouvindo
         if not self.is_paused and not self.is_listening:
@@ -69,7 +69,33 @@ class Character(pygame.sprite.Sprite):
         num = random.randint(1, 10)
         if(num % 2 == 0):
             self.current_dialog_index = 0
+            
+        # Mudar tamanho do boneco 
+        
+    def change_size(self):
+    # Alterna entre o tamanho normal e o tamanho grande
+        self.is_big = not self.is_big
+        if self.is_big:
+            # Redimensiona todas as imagens no self.frames para o dobro do tamanho
+            for i in range(len(self.frames)):
+                self.frames[i] = pygame.transform.scale(self.frames[i], 
+                                                        (self.frames[i].get_width() * 2, 
+                                                        self.frames[i].get_height() * 2))
+            
+            # Atualiza o rect da imagem atual após redimensionamento
+            # Mantém o centro original (posição do personagem) após o redimensionamento
+            self.rect = self.image.get_rect(center=self.rect.center)
+        else:
+            # Redimensiona todas as imagens de volta ao tamanho original
+            for i in range(len(self.frames)):
+                self.frames[i] = pygame.transform.scale(self.frames[i], 
+                                                        (self.frames[i].get_width() // 2, 
+                                                        self.frames[i].get_height() // 2))
+            
+            # Atualiza o rect da imagem original, garantindo que a posição não seja alterada
+            
 
+            
     def start_responding(self):
         # Inicia a resposta
         if self.speech_text is None and self.current_dialog_index < len(self.responses):
