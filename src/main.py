@@ -40,7 +40,6 @@ personagem2 = Character(100, 420, respostas_personagem2, dialogos_personagem1)
 tree1 = Tree(x=150, y=300)  # Posição da árvore no mapa
 tree2 = Tree(x=500, y=300)  # Posição da árvore no mapa
 
-all_sprites = pygame.sprite.Group(personagem1, personagem2,tree1,tree2)
 
 # Classe para representar gotas de chuva
 class Raindrop(pygame.sprite.Sprite):
@@ -65,6 +64,26 @@ raindrops = pygame.sprite.Group()
 for _ in range(100):  # Número de gotas de chuva
     raindrop = Raindrop()
     raindrops.add(raindrop)
+
+
+# Adicionando tudo ao grupo de sprites
+
+house_image = pygame.image.load('assets/images/house.png')
+# Redimensionar a imagem da casa
+class House(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = house_image  # Definir a imagem da casa
+        self.rect = self.image.get_rect()  # Definir o retângulo para colisão e posição
+        self.rect.x = x  # Posição X da casa
+        self.rect.y = y  # Posição Y da casa
+
+    def draw(self, surface):
+        # Método para desenhar a casa na tela
+        surface.blit(self.image, self.rect)  # Desenha a casa na tela
+
+house = House(700, 100)  # Posição X, Y da casa
+all_sprites = pygame.sprite.Group(personagem1, personagem2,tree1,tree2)
 
 # Funções para alternar o ambiente
 def toggle_day_night():
@@ -123,6 +142,7 @@ while running:
 
     # Atualiza e desenha os personagens
     dt = clock.tick(30)
+    house.draw(screen)
     all_sprites.update(dt)
 
     # Verifica colisão e inicia diálogo se apropriado
