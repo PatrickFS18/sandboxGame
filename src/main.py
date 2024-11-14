@@ -11,9 +11,9 @@ screen = pygame.display.set_mode((1200, 700))
 clock = pygame.time.Clock()
 
 # Carregar a imagem do fundo para o dia e noite
-grass_day = pygame.image.load('assets/grass.jpg')
+grass_day = pygame.image.load('assets/images/ambient/grass.jpg')
 grass_day = pygame.transform.scale(grass_day, (1200, 700))
-grass_night = pygame.image.load('assets/grass_night.jpg')
+grass_night = pygame.image.load('assets/images/ambient/grass_night.jpg')
 grass_night = pygame.transform.scale(grass_night, (1200, 700))
 
 # Carregar os sons de ambiente
@@ -35,8 +35,8 @@ dialogos_personagem1 = ["Salve"]
 respostas_personagem2 = ["Bão"]
 
 # Criando os personagens
-personagem1 = Character(50, 400, dialogos_personagem1, respostas_personagem2)
-personagem2 = Character(100, 400, respostas_personagem2, dialogos_personagem1)
+personagem1 = Character(50, 420, dialogos_personagem1, respostas_personagem2)
+personagem2 = Character(100, 420, respostas_personagem2, dialogos_personagem1)
 all_sprites = pygame.sprite.Group(personagem1, personagem2)
 
 # Classe para representar gotas de chuva
