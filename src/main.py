@@ -1,7 +1,7 @@
 import pygame
 import random
 from character import Character
-
+from tree import Tree
 # Inicialização do Pygame e do mixer para os sons
 pygame.init()
 pygame.mixer.init()
@@ -37,7 +37,9 @@ respostas_personagem2 = ["Bão"]
 # Criando os personagens
 personagem1 = Character(50, 420, dialogos_personagem1, respostas_personagem2)
 personagem2 = Character(100, 420, respostas_personagem2, dialogos_personagem1)
-all_sprites = pygame.sprite.Group(personagem1, personagem2)
+tree = Tree(x=500, y=350)  # Posição da árvore no mapa
+
+all_sprites = pygame.sprite.Group(personagem1, personagem2,tree)
 
 # Classe para representar gotas de chuva
 class Raindrop(pygame.sprite.Sprite):
