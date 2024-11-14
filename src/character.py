@@ -2,11 +2,11 @@ import random
 import pygame
 
 character_frames = [
-    pygame.image.load('assets/images/character/walk-1.png'),
-    pygame.image.load('assets/images/character/walk-2.png'),
-    pygame.image.load('assets/images/character/walk-3.png'),
-    pygame.image.load('assets/images/character/walk-4.png'),
-    pygame.image.load('assets/images/character/walk-5.png')
+    pygame.image.load('../assets/images/character/walk-1.png'),
+    pygame.image.load('../assets/images/character/walk-2.png'),
+    pygame.image.load('../assets/images/character/walk-3.png'),
+    pygame.image.load('../assets/images/character/walk-4.png'),
+    pygame.image.load('../assets/images/character/walk-5.png')
 ]
 character_frames = [pygame.transform.scale(frame, (int(frame.get_width() * 0.3), int(frame.get_height() * 0.3))) for frame in character_frames]
 

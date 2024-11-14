@@ -3,7 +3,7 @@ import random
 
 # Carregar as imagens das árvores
 tree_images = [
-    pygame.image.load(f'assets/images/tree/arvore{i}.png') for i in range(1, 16)
+    pygame.image.load(f'../assets/images/tree/arvore{i}.png') for i in range(1, 16)
 ]
 
 # Transformar as imagens para o tamanho adequado, se necessário

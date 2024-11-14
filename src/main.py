@@ -11,24 +11,26 @@ screen = pygame.display.set_mode((1200, 700))
 clock = pygame.time.Clock()
 
 # Carregar a imagem do fundo para o dia e noite
-grass_day = pygame.image.load('assets/images/ambient/grass.jpg')
+grass_day = pygame.image.load('../assets/images/ambient/grass.jpg')
 grass_day = pygame.transform.scale(grass_day, (1200, 700))
-grass_night = pygame.image.load('assets/images/ambient/grass_night.jpg')
+grass_night = pygame.image.load('../assets/images/ambient/grass_night.jpg')
 grass_night = pygame.transform.scale(grass_night, (1200, 700))
 
 # Carregar os sons de ambiente
-rain_sound = pygame.mixer.Sound('assets/sounds/rain.mp3')  # Som de chuva
-day_sound = pygame.mixer.Sound('assets/sounds/day.mp3')     # Som de dia
-night_sound = pygame.mixer.Sound('assets/sounds/night.mp3') # Som de noite
+rain_sound = pygame.mixer.Sound('../assets/sounds/rain.mp3')  # Som de chuva
+day_sound = pygame.mixer.Sound('../assets/sounds/day.mp3')     # Som de dia
+night_sound = pygame.mixer.Sound('../assets/sounds/night.mp3') # Som de noite
+thunder_sound = pygame.mixer.Sound('../assets/sounds/thunder.mp3')     # Som de trovao
 
 # Ajustando volumes
 rain_sound.set_volume(0.3)
 day_sound.set_volume(0.5)
+thunder_sound.set_volume(0.5)
 night_sound.set_volume(0.5)
 
 # Variáveis de ambiente
 is_day = True
-is_raining = False
+is_raining = 0
 
 # Arrays de diálogos e respostas
 dialogos_personagem1 = ["Salve"]
@@ -61,14 +63,12 @@ class Raindrop(pygame.sprite.Sprite):
 
 # Grupo para gerenciar todas as gotas de chuva
 raindrops = pygame.sprite.Group()
-for _ in range(100):  # Número de gotas de chuva
-    raindrop = Raindrop()
-    raindrops.add(raindrop)
+
 
 
 # Adicionando tudo ao grupo de sprites
 
-house_image = pygame.image.load('assets/images/house.png')
+house_image = pygame.image.load('../assets/images/house.png')
 # Redimensionar a imagem da casa
 class House(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -82,7 +82,7 @@ class House(pygame.sprite.Sprite):
         # Método para desenhar a casa na tela
         surface.blit(self.image, self.rect)  # Desenha a casa na tela
 
-house = House(700, 100)  # Posição X, Y da casa
+house = House(730, 180)  # Posição X, Y da casa
 all_sprites = pygame.sprite.Group(personagem1, personagem2,tree1,tree2)
 
 # Funções para alternar o ambiente
@@ -98,13 +98,21 @@ def toggle_day_night():
 
 def toggle_rain():
     global is_raining
-    is_raining = not is_raining
-    if is_raining:
+    is_raining = is_raining+1
+    if(is_raining > 3):
+        is_raining = 0
+    if is_raining > 0:
         rain_sound.play(-1)  # Reproduz o som em loop
-    else:
+    elif(is_raining == 0):
         rain_sound.stop()  # Para o som quando a chuva cessa
-
 # Função para desenhar o menu
+def thunder():
+   n = random.randint(1,5)
+   print(n)
+   if(n == 4):
+      thunder_sound.play()
+      thunder_sound.stop()
+
 def draw_menu():
     font = pygame.font.Font(None, 36)
     options = ["1 - Tornar Dia/Noite", "2 - Chover/Parar"]
@@ -119,6 +127,7 @@ ultimo_falante = None
 # Inicia o som de dia
 day_sound.play(-1)  # Som de dia em loop no início
 
+    
 while running:
     screen.fill((0, 0, 0))
 
@@ -127,7 +136,11 @@ while running:
         screen.blit(grass_day, (0, 0))
     else:
         screen.blit(grass_night, (0, 0))
-
+    if house.rect.colliderect(personagem1) and is_raining == 3:
+        print('Entra na casa')
+    elif house.rect.colliderect(personagem1) and is_raining == 2:
+        print('Gerar numero aletaorio para boneco entrar ou nao na casa')
+        
     # Desenha o menu na tela
     draw_menu()
 
@@ -139,6 +152,12 @@ while running:
                 toggle_day_night()
             elif event.key == pygame.K_2:  # Alterna chuva
                 toggle_rain()
+                n= 100 * is_raining
+                raindrops.empty()  # Limpa todas as gotas de chuva anteriores
+
+                for _ in range(n):  # Número de gotas de chuva
+                    raindrop = Raindrop()
+                    raindrops.add(raindrop)
 
     # Atualiza e desenha os personagens
     dt = clock.tick(30)
@@ -161,6 +180,8 @@ while running:
     if is_raining:
         raindrops.update()
         raindrops.draw(screen)
+        if is_raining == 3:
+            thunder()
 
     # Desenha os personagens na tela
     for sprite in all_sprites:
